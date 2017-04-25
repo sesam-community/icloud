@@ -1,0 +1,14 @@
+sudo: required
+
+
+language: java
+
+services:
+  - docker
+
+after_success:
+  - if [ "$TRAVIS_BRANCH" == "master" ]; then
+    docker build -t sesamcommunity/content-extractor .;
+    docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD";
+    docker push sesamcommunity/content-extractor:latest;
+    fi
